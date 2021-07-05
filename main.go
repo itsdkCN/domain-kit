@@ -5,14 +5,14 @@ import (
 )
 
 type Domain struct {
-	idcType   string
-	keyId     string
-	secretKey string
-	host      string
-	domain    string
-	ip        string
-	name      string
-	opType    string
+	IdcType   string
+	KeyId     string
+	SecretKey string
+	Host      string
+	Domain    string
+	Ip        string
+	Name      string
+	OpType    string
 }
 
 func main() {
@@ -26,14 +26,14 @@ func main() {
 	opType := flag.String("type", "", "")
 	flag.Parse()
 	domainData := Domain{
-		idcType:   *idcType,
-		keyId:     *keyID,
-		secretKey: *secretKey,
-		host:      *host,
-		domain:    *domain,
-		ip:        *ip,
-		name:      *name,
-		opType:    *opType,
+		IdcType:   *idcType,
+		KeyId:     *keyID,
+		SecretKey: *secretKey,
+		Host:      *host,
+		Domain:    *domain,
+		Ip:        *ip,
+		Name:      *name,
+		OpType:    *opType,
 	}
 
 	switch *opType {

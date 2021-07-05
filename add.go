@@ -12,13 +12,13 @@ import (
 )
 
 func Add(domainObj Domain) {
-	idcType := domainObj.idcType
-	keyID := domainObj.keyId
-	secretKey := domainObj.secretKey
-	host := domainObj.host
-	domain := domainObj.domain
-	ip := domainObj.ip
-	name := domainObj.name
+	idcType := domainObj.IdcType
+	keyID := domainObj.KeyId
+	secretKey := domainObj.SecretKey
+	host := domainObj.Host
+	domain := domainObj.Domain
+	ip := domainObj.Ip
+	name := domainObj.Name
 	flag.Parse()
 	if idcType == "aws" {
 		awsKeyID := keyID

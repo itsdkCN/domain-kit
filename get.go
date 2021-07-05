@@ -7,12 +7,12 @@ import (
 )
 
 func Get(domainData Domain) {
-	idcType := domainData.idcType
-	keyID := domainData.keyId
-	secretKey := domainData.secretKey
-	host := domainData.host
-	domain := domainData.domain
-	name := domainData.name
+	idcType := domainData.IdcType
+	keyID := domainData.KeyId
+	secretKey := domainData.SecretKey
+	host := domainData.Host
+	domain := domainData.Domain
+	name := domainData.Name
 	flag.Parse()
 	if idcType == "aws" {
 		fmt.Println(host)
