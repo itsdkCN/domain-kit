@@ -6,7 +6,7 @@ import (
 	"github.com/itsdkCN/domain-kit/daddy"
 )
 
-func get(domainData Domain) {
+func Get(domainData Domain) {
 	idcType := domainData.idcType
 	keyID := domainData.keyId
 	secretKey := domainData.secretKey

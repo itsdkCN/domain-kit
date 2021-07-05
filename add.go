@@ -11,7 +11,7 @@ import (
 	"github.com/itsdkCN/domain-kit/daddy"
 )
 
-func add(domainObj Domain) {
+func Add(domainObj Domain) {
 	idcType := domainObj.idcType
 	keyID := domainObj.keyId
 	secretKey := domainObj.secretKey

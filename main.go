@@ -38,10 +38,10 @@ func main() {
 
 	switch *opType {
 	case "add":
-		add(domainData)
+		Add(domainData)
 		break
 	case "get":
-		get(domainData)
+		Get(domainData)
 		break
 	}
 }
