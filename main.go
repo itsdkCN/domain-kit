@@ -2,18 +2,8 @@ package main
 
 import (
 	"flag"
+	"github.com/itsdkCN/domain-kit/op"
 )
-
-type Domain struct {
-	IdcType   string
-	KeyId     string
-	SecretKey string
-	Host      string
-	Domain    string
-	Ip        string
-	Name      string
-	OpType    string
-}
 
 func main() {
 	idcType := flag.String("idcType", "", "")
@@ -25,7 +15,7 @@ func main() {
 	name := flag.String("name", *ip, "")
 	opType := flag.String("type", "", "")
 	flag.Parse()
-	domainData := Domain{
+	domainData := op.Domain{
 		IdcType:   *idcType,
 		KeyId:     *keyID,
 		SecretKey: *secretKey,
@@ -38,10 +28,10 @@ func main() {
 
 	switch *opType {
 	case "add":
-		Add(domainData)
+		op.Add(domainData)
 		break
 	case "get":
-		Get(domainData)
+		op.Get(domainData)
 		break
 	}
 }
