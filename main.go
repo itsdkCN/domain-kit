@@ -33,5 +33,8 @@ func main() {
 	case "get":
 		op.Get(domainData)
 		break
+	case "query":
+		op.Query(domainData)
+		break
 	}
 }
