@@ -1,6 +1,7 @@
 package op
 
 import (
+	"context"
 	"flag"
 	"fmt"
 	"github.com/aliyun/alibaba-cloud-sdk-go/services/alidns"
@@ -8,7 +9,9 @@ import (
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/route53"
+	"github.com/cloudflare/cloudflare-go"
 	"github.com/itsdkCN/domain-kit/daddy"
+	"log"
 )
 
 func Add(domainObj Domain) {
@@ -83,6 +86,23 @@ func Add(domainObj Domain) {
 			fmt.Print(err.Error())
 		}
 		fmt.Printf("response is %#v\n", name+"."+domain)
+	} else if idcType == "cloudflare" {
+		api, err := cloudflare.NewWithAPIToken(secretKey)
+		// alternatively, you can use a scoped API token
+		// api, err := cloudflare.NewWithAPIToken(os.Getenv("CLOUDFLARE_API_TOKEN"))
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		// Most API calls require a Context
+		ctx := context.Background()
+
+		_, err = api.CreateDNSRecord(ctx, keyID, cloudflare.DNSRecord{Data: ip, Name: name, TTL: 3600, Type: "A"})
+		if err != nil {
+			return
+		}
+		fmt.Printf("response is %#v\n", name+"."+domain)
+
 	} else {
 		fmt.Println("不支持的类型")
 	}

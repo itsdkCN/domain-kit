@@ -6,11 +6,13 @@ import (
 	"github.com/itsdkCN/domain-kit/daddy"
 )
 
-func Query(domainData Domain) {
+func Delete(domainData Domain) {
 	idcType := domainData.IdcType
 	keyID := domainData.KeyId
 	secretKey := domainData.SecretKey
 	host := domainData.Host
+	domain := domainData.Domain
+	name := domainData.Name
 	flag.Parse()
 	if idcType == "aws" {
 		fmt.Println(host)
@@ -18,7 +20,7 @@ func Query(domainData Domain) {
 
 	} else if idcType == "godaddy" {
 		client, _ := daddy.NewClient(keyID, secretKey, false)
-		resp, err := client.Domains.List([]string{""}, []string{""}, 100, "", []string{}, "")
+		resp, err := client.Domains.DeleteRecords(domain, "A", name)
 		if err != nil {
 			fmt.Printf("response is %#v\n", err)
 			return

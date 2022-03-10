@@ -36,5 +36,7 @@ func main() {
 	case "query":
 		op.Query(domainData)
 		break
+	case "delete":
+		op.Delete(domainData)
 	}
 }
