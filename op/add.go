@@ -28,7 +28,11 @@ func Add(domainObj Domain) {
 		awsSecretKey := secretKey
 		creds := credentials.NewStaticCredentials(awsKeyID, awsSecretKey, "")
 		awsConfig := aws.Config{Region: aws.String("us-west-2"), Credentials: creds}
-		r53Svc := route53.New(session.New(&awsConfig))
+		newSession, err := session.NewSession(&awsConfig)
+		if err != nil {
+			return
+		}
+		r53Svc := route53.New(newSession)
 		fmt.Printf("domain name：%s\ninput ip：%s\n", domain, ip)
 		input := &route53.ChangeResourceRecordSetsInput{
 			HostedZoneId: aws.String(host),
@@ -87,7 +91,7 @@ func Add(domainObj Domain) {
 		}
 		fmt.Printf("response is %#v\n", name+"."+domain)
 	} else if idcType == "cloudflare" {
-		api, err := cloudflare.NewWithAPIToken(secretKey)
+		api, err := cloudflare.New(secretKey, keyID)
 		// alternatively, you can use a scoped API token
 		// api, err := cloudflare.NewWithAPIToken(os.Getenv("CLOUDFLARE_API_TOKEN"))
 		if err != nil {
@@ -96,9 +100,13 @@ func Add(domainObj Domain) {
 
 		// Most API calls require a Context
 		ctx := context.Background()
-
-		_, err = api.CreateDNSRecord(ctx, keyID, cloudflare.DNSRecord{Data: ip, Name: name, TTL: 3600, Type: "A"})
+		zoneId, err := api.ZoneIDByName(domain)
 		if err != nil {
+			return
+		}
+		_, err = api.CreateDNSRecord(ctx, zoneId, cloudflare.DNSRecord{Content: ip, Name: name, TTL: 3600, Type: "A"})
+		if err != nil {
+			fmt.Print(err.Error())
 			return
 		}
 		fmt.Printf("response is %#v\n", name+"."+domain)
